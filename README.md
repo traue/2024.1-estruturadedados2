@@ -22,6 +22,12 @@ em breve
 ## Links importantes
 
 - [Data Structures - GeekForGeeks](https://www.geeksforgeeks.org/data-structures/)
+- [Replit](https://replit.com/)
+- [Canal do Felipe Deschamps](https://www.youtube.com/@FilipeDeschamps)
 
 ## Bibliografia
+
+em breve
+
+
 
