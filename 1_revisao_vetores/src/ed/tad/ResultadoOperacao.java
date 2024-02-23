@@ -2,7 +2,7 @@ package ed.tad;
 
 public enum ResultadoOperacao {
 	INEXISTENTE("Ops... Elemento inexistente!"),
-	BEMSUCEDIDA("Operacao executada"),
+	BEMSUCEDIDA("Operação executada"),
 	FORADAFAIXA("Ops... Valor fora da faixa permitida no vetor"),
 	FORADASFRONTEIRAS("Ops... Índice fora dos limites do vetor"),
 	PREVISTOOPERACAO("Ops... A posicao já contém o previsto pela operacao" 
