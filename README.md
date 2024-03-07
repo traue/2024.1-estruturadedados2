@@ -21,7 +21,8 @@ com linguagem orientada a objetos.
 ## Links importantes
 
 - [Data Structures - GeekForGeeks](https://www.geeksforgeeks.org/data-structures/)
-- [Curso de Git e GitHub - Shcool of Net](https://www.schoolofnet.com/curso/git/controle-de-versao/git-e-github/)
+- [Curso de Git e GitHub - Shcool of Net](https://www.schoolofnet.com/curso/git/controle-de-versao/git-e-github/) -> Está fora do ar 🫤
+- [Curso de Git e GiHub - Udemy](https://www.udemy.com/course/git-e-github-para-iniciantes/)
 - [Replit](https://replit.com/)
 - [Canal do Felipe Deschamps](https://www.youtube.com/@FilipeDeschamps)
 
