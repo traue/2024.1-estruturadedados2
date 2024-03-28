@@ -113,29 +113,16 @@ public class Node {
 
 		return height + 1;
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.format(
-				"Data: %s\n"
-				+ "Parent: %s\n"
-				+ "Left: %s\n"
-				+ "Right: %s\n"
-				+ "Is Root: %s\n"
-				+ "Is Leaf: %s\n"
-				+ "Degree: %d\n"
-				+ "Level: %d\n"
-				+ "Height: %d", 
-					getData(), 
-					(getParent() != null ? getParent().getData() : "<no parent data>"),
-					(getLeft() != null ? getLeft().getData() : "<no left data>"),
-					(getRight() != null ? getRight().getData() : "<no right data>"),
-					(isRoot() ? "Yes" : "No"),
-					(isLeaf() ? "Yes" : "No"),
-					getDegree(),
-					getLevel(),
-					getHeight()
-				);
+				"Data: %s\n" + "Parent: %s\n" + "Left: %s\n" + "Right: %s\n" + "Is Root: %s\n" + "Is Leaf: %s\n"
+						+ "Degree: %d\n" + "Level: %d\n" + "Height: %d",
+				getData(), (getParent() != null ? getParent().getData() : "<no parent data>"),
+				(getLeft() != null ? getLeft().getData() : "<no left data>"),
+				(getRight() != null ? getRight().getData() : "<no right data>"), (isRoot() ? "Yes" : "No"),
+				(isLeaf() ? "Yes" : "No"), getDegree(), getLevel(), getHeight());
 	}
 
 }
