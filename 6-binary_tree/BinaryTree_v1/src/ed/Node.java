@@ -1,3 +1,8 @@
+/*
+ * Implementação do Prof. André Kishimoto
+ * 
+ * */
+
 package ed;
 
 public class Node {
