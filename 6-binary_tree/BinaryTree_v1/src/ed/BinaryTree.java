@@ -1,3 +1,7 @@
+/*
+ * Implementação do Prof. André Kishimoto
+ * 
+ * */
 package ed;
 
 import java.util.LinkedList;
