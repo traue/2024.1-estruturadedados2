@@ -2,8 +2,8 @@ package ed;
 
 public class AvlNode<T> {
 
-	private AvlNode<T> left;
-	private AvlNode<T> right;
+	private AvlNode<?> left;
+	private AvlNode<?> right;
 	private final int nodeId;
 	private final T data;
 	private SIDE side;
@@ -16,19 +16,19 @@ public class AvlNode<T> {
 		this.side = SIDE.root;
 	}
 
-	public AvlNode<T> getLeft() {
+	public AvlNode<?> getLeft() {
 		return left;
 	}
 
-	public void setLeft(AvlNode<T> left) {
+	public void setLeft(AvlNode<?> left) {
 		this.left = left;
 	}
 
-	public AvlNode<T> getRight() {
+	public AvlNode<?> getRight() {
 		return right;
 	}
 
-	public void setRight(AvlNode<T> right) {
+	public void setRight(AvlNode<?> right) {
 		this.right = right;
 	}
 
