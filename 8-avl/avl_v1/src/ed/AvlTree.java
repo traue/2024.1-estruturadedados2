@@ -2,6 +2,8 @@ package ed;
 
 import java.util.Stack;
 
+import javax.security.sasl.SaslException;
+
 public class AvlTree {
 
 	private AvlNode<?> root;
@@ -104,14 +106,18 @@ public class AvlTree {
 			if (stack.get(0).getBalance() > 0) {
 				if (stack.get(1).getBalance() >= 0) {
 					// rotação simples a esquerda
+					leftSimpleRotation(stack, nodeId, false);
 				} else {
-					// rotação dupla a equerda
+					//rotação dupla a esq
+					leftDoubleRotation(stack, nodeId);
 				}
 			} else {
 				if (stack.get(1).getBalance() < 0) {
 					// rotação simples a direita
+					rightSimpleRotation(stack, nodeId, false);
 				} else {
 					// rotação dupla a direita
+					rightDoubleRotation(stack, nodeId);
 				}
 			}
 			return;
@@ -126,34 +132,36 @@ public class AvlTree {
 			// balanceamento do filho
 			if (noId.getBalance() * childNodeId.getBalance() >= 0) {
 				// rotação simples a direita
+				rightSimpleRotation(stack, nodeId, false);
 			} else {
-				// rotação dupla a direita
+				// rotação dupla a dir
+				rightDoubleRotation(stack, nodeId);
 			}
 
 		} else {
-			//desbalanceamento do lado direito
+			// desbalanceamento do lado direito
 			if (noId.getBalance() * childNodeId.getBalance() > 0) {
-				//rotação simples a esquera
+				leftSimpleRotation(stack, nodeId, false);
 			} else {
-				//rotação dupla a esquerda
+				// rotação dupla a esquerda
+				leftDoubleRotation(stack, nodeId);
 			}
 		}
 
 	}
-	
-	
+
 	private void leftSimpleRotation(Stack<AvlNode<?>> stack, int id, boolean rotation) {
-		
 		AvlNode<?> nodeId = stack.get(0);
 		AvlNode<?> nodeIdParent;
 		AvlNode<?> nodeIdChild = stack.get(id + 1);
-		
+
 		if (id == 0) {
-			nodeIdParent = null; //root displacement
+			nodeIdParent = null; // root displacement
 		} else {
 			nodeIdParent = stack.get(id - 1);
 		}
-		
+
+		// o filho passa a ser a nova raiz (e filho esq ou dir do pai)
 		if (nodeIdParent != null) {
 			if (nodeIdParent.getSide() == SIDE.left) {
 				nodeIdParent.setLeft(nodeIdChild);
@@ -161,20 +169,138 @@ public class AvlTree {
 				nodeIdParent.setRight(nodeIdChild);
 			}
 		}
-		
+
+		// subarvore esq do filho passa a ser direito da raiz anterior
+		// se não exisir é nulo
 		nodeId.setRight(nodeIdChild.getLeft());
 		nodeIdChild.setLeft(nodeId);
-		
+
 		if (rotation) {
 			return;
 		}
-		
-		//paramos aqui
-		
+
+		// correção das profundidades
+		if (id == 0) {
+			if (nodeId.getRight() != null) {
+				nodeId.setLeftDepth(nodeId.getRight().maxDepth() + 1);
+			} else {
+				nodeId.setRightDepth(0);
+			}
+			nodeIdChild.setLeftDepth(nodeId.maxDepth() + 1);
+			this.root = nodeIdChild;
+		} else {
+			// lado esq
+			if (nodeId.getLeft() == null) {
+				nodeId.setLeftDepth(0);
+			} else { // tem filho á esq
+				nodeId.setLeftDepth(nodeId.getLeft().maxDepth() + 1);
+			}
+
+			// lado dir
+			if (nodeId.getRight() == null) {
+				nodeId.setRightDepth(0);
+			} else {
+				nodeId.setRightDepth(nodeId.getRight().maxDepth() + 1);
+			}
+		}
+
+		System.out.println("Left Simple Rotation");
 	}
 
-}
+	private void rightSimpleRotation(Stack<AvlNode<?>> stack, int id, boolean rotation) {
 
+		AvlNode<?> nodeId = stack.get(id);
+		AvlNode<?> nodeIdParent;
+		AvlNode<?> nodeIdChild = stack.get(id + 1);
+
+		if (id == 0) {
+			nodeIdParent = null;
+		} else {
+			nodeIdParent = stack.get(id - 1);
+		}
+
+		if (nodeIdParent != null) {
+			if (nodeIdParent.getSide() == SIDE.left) {
+				nodeIdParent.setLeft(nodeIdChild);
+			} else {
+				nodeIdParent.setRight(nodeIdChild);
+			}
+		}
+
+		nodeId.setLeft(nodeIdChild.getRight());
+		nodeIdChild.setRight(nodeId);
+
+		if (rotation) {
+			return;
+		}
+
+		// correção das profundidades
+		if (id == 0) {
+			if (nodeId.getLeft() != null) {
+				nodeId.setLeftDepth(nodeId.getLeft().getLeftDepth() + 1);
+			} else {
+				nodeId.setLeftDepth(0);
+			}
+			nodeIdChild.setRightDepth(nodeId.maxDepth() + 1);
+			this.root = nodeIdChild;
+		} else {
+			if (nodeId.getLeft() == null) {
+				nodeId.setLeftDepth(0);
+			} else {
+				nodeId.setLeftDepth(nodeId.getLeft().maxDepth() + 1);
+			}
+
+			if (nodeId.getRight() == null) {
+				nodeId.setRightDepth(0);
+			} else {
+				nodeId.setRightDepth(nodeId.getRight().maxDepth() + 1);
+			}
+			nodeIdChild.setLeftDepth(nodeId.maxDepth() + 1);
+		}
+		System.out.println("Right Simple Rotation");
+	}
+
+	private void leftDoubleRotation(Stack<AvlNode<?>> stack, int id) {
+		rightSimpleRotation(stack, id + 1, false);
+		leftSimpleRotation(getStackPath(stack.peek().getNodeId()), id, false);
+	}
+
+	private void rightDoubleRotation(Stack<AvlNode<?>> stack, int id) {
+		leftSimpleRotation(stack, id + 1, false);
+		rightSimpleRotation(getStackPath(stack.peek().getNodeId()), id, false);
+	}
+	
+	private Stack<AvlNode<?>> getStackPath(int value) {
+		if (qty == 0) {
+			return null;
+		}
+		Stack<AvlNode<?>> stack = new Stack<>();
+		AvlNode<?> cursor = root;
+		stack.add(cursor);
+		while (true) {
+			if (value == cursor.getNodeId()) {
+				cursor.setSide(SIDE.root);
+				return stack;
+			}
+			
+			if (value < cursor.getNodeId()) {
+				cursor.setSide(SIDE.left);
+				cursor = cursor.getLeft();
+			} else if (value > cursor.getNodeId()) {
+				cursor.setSide(SIDE.right);
+				cursor = cursor.getRight();
+			}
+			
+			if (cursor == null) {
+				stack.add(null);
+				return stack;
+			}
+			
+			stack.add(cursor);
+		}
+	}
+	
+}
 
 
 
