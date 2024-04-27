@@ -10,10 +10,10 @@ public class AvlNode<T> {
 	private int leftDepth;
 	private int rightDepth;
 
-	public AvlNode(int nodeId, T data) {
-		this.nodeId = nodeId;
+	public AvlNode(int id, T data) {
+		this.nodeId = id;
 		this.data = data;
-		this.side = SIDE.root;
+		this.setSide(SIDE.ROOT);
 	}
 
 	public AvlNode<?> getLeft() {
@@ -32,12 +32,12 @@ public class AvlNode<T> {
 		this.right = right;
 	}
 
-	public SIDE getSide() {
-		return side;
+	public int getNodeId() {
+		return nodeId;
 	}
 
-	public void setSide(SIDE side) {
-		this.side = side;
+	public T getData() {
+		return data;
 	}
 
 	public int getLeftDepth() {
@@ -52,16 +52,16 @@ public class AvlNode<T> {
 		return rightDepth;
 	}
 
+	public SIDE getSide() {
+		return side;
+	}
+
+	public void setSide(SIDE side) {
+		this.side = side;
+	}
+
 	public void setRightDepth(int rightDepth) {
 		this.rightDepth = rightDepth;
-	}
-
-	public int getNodeId() {
-		return nodeId;
-	}
-
-	public T getData() {
-		return data;
 	}
 
 	public int getBalance() {
@@ -69,13 +69,12 @@ public class AvlNode<T> {
 	}
 
 	public int maxDepth() {
-		return Math.max(rightDepth, leftDepth);
-	}
-	
-	@Override
-	public String toString() {
-		return String.format("ID: %d | LetDepth: %d | RightDepth: %d | Side: %s | Balance: %d",
-				getNodeId(), getLeftDepth(), getRightDepth(), getSide(), getBalance());
+		return Math.max(leftDepth, rightDepth);
 	}
 
+	@Override
+	public String toString() {
+		return String.format("ID: %d | LeftDelpth: %d | RightDepth: %d | Side: %c | Balance: %d", getNodeId(),
+				getLeftDepth(), getRightDepth(), getSide(), getBalance());
+	}
 }

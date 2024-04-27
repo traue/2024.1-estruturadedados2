@@ -25,5 +25,4 @@ public class NodeData {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 }
