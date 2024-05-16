@@ -37,28 +37,28 @@ public class HashTable {
 					return HashOperation.ELEMENT_REPEATED;
 				}
 			}
+		}
 
-		} else {
-			boolean inserted = false;
+		boolean inserted = false;
 
-			for (int i = h; i < hashTable.length; i++) {
+		for (int i = h; i < hashTable.length; i++) {
+			if (hashTable[i] == null) {
+				hashTable[i] = e;
+				inserted = true;
+				break;
+			}
+		}
+
+		if (!inserted) {
+			for (int i = 0; i < h; i++) {
 				if (hashTable[i] == null) {
 					hashTable[i] = e;
 					inserted = true;
 					break;
 				}
 			}
-
-			if (!inserted) {
-				for (int i = 0; i < h; i++) {
-					if (hashTable[i] == null) {
-						hashTable[i] = e;
-						inserted = true;
-						break;
-					}
-				}
-			}
 		}
+
 		qty++;
 		return HashOperation.SUCCESS;
 
@@ -107,6 +107,10 @@ public class HashTable {
 			}
 		}
 		return sb.toString();
+	}
+	
+	public Element getElementFromPosition(int position) {
+		return this.hashTable[position];
 	}
 
 }
